@@ -39,8 +39,8 @@ class BaseCmdLineTest(CoverageTest):
         directory=None, ignore_errors=None, include=None, omit=None, morfs=[],
     )
     defaults.html_report(
-        directory=None, ignore_errors=None, include=None, omit=None, morfs=[],
-        skip_covered=None, title=None
+        directory=None, ignore_errors=None, include=None, omit=None, inline_styles=None, 
+        morfs=[], skip_covered=None, title=None
     )
     defaults.report(
         ignore_errors=None, include=None, omit=None, morfs=[],

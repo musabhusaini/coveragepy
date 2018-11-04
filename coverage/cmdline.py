@@ -141,6 +141,10 @@ class Opts(object):
         '', '--title', action='store', metavar="TITLE",
         help="A text string to use as the title on the HTML.",
     )
+    inline_styles = optparse.make_option(
+        '', '--inline-styles', action='store_true',
+        help="Converts css block into inline style",
+    )
     version = optparse.make_option(
         '', '--version', action='store_true',
         help="Display version information and exit.",
@@ -182,6 +186,7 @@ class CoverageOptionParser(optparse.OptionParser, object):
             timid=None,
             title=None,
             version=None,
+            inline_styles=None,
             )
 
         self.disable_interspersed_args()
@@ -334,6 +339,7 @@ CMDS = {
             Opts.omit,
             Opts.title,
             Opts.skip_covered,
+            Opts.inline_styles,
             ] + GLOBAL_ARGS,
         usage="[options] [modules]",
         description=(
@@ -526,7 +532,7 @@ class CoverageScript(object):
         elif options.action == "html":
             total = self.coverage.html_report(
                 directory=options.directory, title=options.title,
-                skip_covered=options.skip_covered, **report_args)
+                skip_covered=options.skip_covered, inline_styles=options.inline_styles, **report_args)
         elif options.action == "xml":
             outfile = options.outfile
             total = self.coverage.xml_report(outfile=outfile, **report_args)

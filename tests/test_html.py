@@ -1050,3 +1050,13 @@ assert len(math) == 18
             '<span class="str">"db40,dd00: x&#56128;&#56576;"</span>',
             '<span class="str">"db40,dd00: x&#917760;"</span>',
         )
+
+class HtmlInlineStylesTest(HtmlTestHelpers, CoverageTest):
+    """Tests of the HTML inline style support."""
+    
+     def test_default_inline_styles(self):
+        self.create_initial_files()
+        self.run_coverage(htmlargs=dict(inline_styles=True))
+        index = self.get_html_index_content()
+        self.assertIn("<title>Coverage report</title>", index)
+        self.assertIn('<body class="indexfile" style="margin: 0;padding: 0;border: 0;outline: 0;font-weight: inherit;font-style: inherit;font-size: 16px;font-family: georgia, serif;vertical-align: baseline">', index)

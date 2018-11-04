@@ -94,6 +94,19 @@ class HtmlReporter(Reporter):
         super(HtmlReporter, self).__init__(cov, config)
         self.directory = None
         title = self.config.html_title
+        try:
+            self.inline_styles = self.config.inline_styles
+            self.not_inline_styles = False
+
+            # reading the css stylesheet
+            f = open(os.path.join(os.path.dirname(__file__), *["htmlfiles", "style.css"]))
+            self.css_styles = f.read().decode('utf-8').strip()
+            f.flush()
+            f.close()
+        except Exception as e:
+            self.inline_styles = False
+            self.not_inline_styles = True
+            self.css_styles = None
         if env.PY2:
             title = title.decode("utf8")
         self.template_globals = {
@@ -103,6 +116,7 @@ class HtmlReporter(Reporter):
             '__url__': coverage.__url__,
             '__version__': coverage.__version__,
         }
+
         self.source_tmpl = Templite(read_data("pyfile.html"), self.template_globals)
 
         self.data = cov.get_data()
@@ -284,6 +298,9 @@ class HtmlReporter(Reporter):
             'nums': nums,
             'lines': lines,
             'time_stamp': self.time_stamp,
+            'inline_styles': self.inline_styles,
+            'not_inline_styles': self.not_inline_styles,
+            'css_styles': self.css_styles,
         })
 
         write_html(html_path, html)
@@ -309,6 +326,9 @@ class HtmlReporter(Reporter):
             'files': self.files,
             'totals': self.totals,
             'time_stamp': self.time_stamp,
+            'inline_styles': self.inline_styles,
+            'not_inline_styles': self.not_inline_styles,
+            'css_styles': self.css_styles,
         })
 
         write_html(os.path.join(self.directory, "index.html"), html)
