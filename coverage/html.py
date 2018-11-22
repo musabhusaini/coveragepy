@@ -104,6 +104,7 @@ class HtmlReporter(Reporter):
             f.flush()
             f.close()
         except Exception as e:
+            print(e)
             self.inline_styles = False
             self.not_inline_styles = True
             self.css_styles = None
