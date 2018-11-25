@@ -99,10 +99,8 @@ class HtmlReporter(Reporter):
             self.not_inline_styles = False
 
             # reading the css stylesheet
-            f = open(os.path.join(os.path.dirname(__file__), *["htmlfiles", "style.css"]), "rb")
-            self.css_styles = f.read().decode('utf-8').strip()
-            f.flush()
-            f.close()
+            with open(os.path.join(os.path.dirname(__file__), *["htmlfiles", "style.css"]), "rb") as f:
+                self.css_styles = f.read().decode('utf-8').strip()
         except Exception as e:
             print(e)
             self.inline_styles = False
